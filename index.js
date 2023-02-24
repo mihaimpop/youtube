@@ -11,7 +11,7 @@ function getMobileOperatingSystem() {
   }
 
   // iOS detection from: http://stackoverflow.com/a/9039885/177710
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+  if (/iPad|iPhone|iPod/.test(userAgent)) {
       return "iOS";
   }
 
@@ -25,13 +25,22 @@ window.onload = function() {
   const os = getMobileOperatingSystem();
 
   switch(os) {
-    case "Android":
-      window.location.replace("intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end");
-    case "iOS":
+    case "Android": {
+      window.location.href = "intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end";
+      window.setTimeout(function() {
+        window.location = "https://youtube.com/@meMihai";
+    }, 25);
+    }
+    case "iOS":{
       // window.location.replace("youtube://www.youtube.com/channel/@meMihai");
-      window.location.replace("vnd.youtube://@meMihai");
-    default:
-      window.location.replace("http://www.google.com");
+      window.location.href = "vnd.youtube://@meMihai";
+      window.setTimeout(function() {
+        window.location = "https://youtube.com/@meMihai";
+    }, 25);
+    }
+    case "unknown": {
+      window.location.href = "https://youtube.com/@meMihai";
+    }
       // window.location.replace("https://youtube.com/@meMihai");
   }
 
@@ -40,5 +49,3 @@ window.onload = function() {
   }
   window.addEventListener('pagehide', killPopup);
 };
-
-console.log('ndfsdfv')
