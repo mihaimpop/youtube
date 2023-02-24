@@ -19,4 +19,12 @@ function getMobileOperatingSystem() {
 }
 
 const os = getMobileOperatingSystem();
-console.log(os);
+
+switch(os) {
+  case "Android":
+    return window.location.replace("intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end");
+  case "iOS":
+    return window.location.replace("vnd.youtube://www.youtube.com/@meMihai");
+  default:
+    return window.location.replace("https://youtube.com/@meMihai");
+}
