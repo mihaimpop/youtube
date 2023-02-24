@@ -38,9 +38,7 @@ window.onload = function() {
   function killPopup() {
       window.removeEventListener('pagehide', killPopup);
   }
-
   window.addEventListener('pagehide', killPopup);
-
 };
 
 console.log('ndfsdfv')
