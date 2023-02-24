@@ -18,13 +18,29 @@ function getMobileOperatingSystem() {
   return "unknown";
 }
 
-const os = getMobileOperatingSystem();
 
-switch(os) {
-  case "Android":
-    return window.location.replace("intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end");
-  case "iOS":
-    return window.location.replace("vnd.youtube://www.youtube.com/@meMihai");
-  default:
-    return window.location.replace("https://youtube.com/@meMihai");
-}
+
+
+window.onload = function() {
+  const os = getMobileOperatingSystem();
+
+  switch(os) {
+    case "Android":
+      window.location.replace("intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end");
+    case "iOS":
+      // window.location.replace("youtube://www.youtube.com/channel/@meMihai");
+      window.location.replace("vnd.youtube://@meMihai");
+    default:
+      window.location.replace("http://www.google.com");
+      // window.location.replace("https://youtube.com/@meMihai");
+  }
+
+  function killPopup() {
+      window.removeEventListener('pagehide', killPopup);
+  }
+
+  window.addEventListener('pagehide', killPopup);
+
+};
+
+console.log('ndfsdfv')
