@@ -26,20 +26,20 @@ window.onload = function() {
 
   switch(os) {
     case "Android": {
-      window.location.href = "intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end";
+      window.location.replace("intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end");
       window.setTimeout(function() {
         window.location = "https://youtube.com/@meMihai";
     }, 25);
     }
     case "iOS":{
       // window.location.replace("youtube://www.youtube.com/channel/@meMihai");
-      window.location.href = "vnd.youtube://@meMihai";
+      window.location.replace("vnd.youtube://@meMihai");
       window.setTimeout(function() {
         window.location = "https://youtube.com/@meMihai";
     }, 25);
     }
     case "unknown": {
-      window.location.href = "https://youtube.com/@meMihai";
+      window.location.replace("https://youtube.com/@meMihai");
     }
       // window.location.replace("https://youtube.com/@meMihai");
   }
