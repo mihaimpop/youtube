@@ -1,51 +1,54 @@
+const WINDOWS_PHONE = 'Windows Phone';
+const ANDROID_PHONE = 'Android';
+const IOS_PHONE = 'iOS';
+const UNKNOWN = 'unknown';
+
 function getMobileOperatingSystem() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
   // Windows Phone must come first because its UA also contains "Android"
   if (/windows phone/i.test(userAgent)) {
-      return "Windows Phone";
+    return WINDOWS_PHONE;
   }
 
   if (/android/i.test(userAgent)) {
-      return "Android";
+    return ANDROID_PHONE;
   }
 
-  // iOS detection from: http://stackoverflow.com/a/9039885/177710
   if (/iPad|iPhone|iPod/.test(userAgent)) {
-      return "iOS";
+    return IOS_PHONE;
   }
 
-  return "unknown";
+  return UNKNOWN;
 }
 
-
-
-
-window.onload = function() {
+window.onload = function () {
   const os = getMobileOperatingSystem();
+  const androidLink =
+    'intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end';
+  const iOSLink = 'vnd.youtube://@meMihai';
+  const fallbackLink = 'https://youtube.com/@meMihai';
 
-  switch(os) {
-    case "Android": {
-      window.location.replace("intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end");
-      window.setTimeout(function() {
-        window.location = "https://youtube.com/@meMihai";
-    }, 25);
+  switch (os) {
+    case ANDROID_PHONE: {
+      window.location = androidLink;
+      window.setTimeout(function () {
+        window.location = fallbackLink;
+      }, 25);
     }
-    case "iOS":{
-      // window.location.replace("youtube://www.youtube.com/channel/@meMihai");
-      window.location.replace("vnd.youtube://@meMihai");
-      window.setTimeout(function() {
-        window.location = "https://youtube.com/@meMihai";
-    }, 25);
+    case IOS_PHONE: {
+      window.location = iOSLink;
+      window.setTimeout(function () {
+        window.location = fallbackLink;
+      }, 25);
     }
-    case "unknown": {
-      window.location.replace("https://youtube.com/@meMihai");
+    case UNKNOWN: {
+      window.location = fallbackLink;
     }
-      // window.location.replace("https://youtube.com/@meMihai");
   }
 
   function killPopup() {
-      window.removeEventListener('pagehide', killPopup);
+    window.removeEventListener('pagehide', killPopup);
   }
   window.addEventListener('pagehide', killPopup);
 };
