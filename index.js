@@ -26,7 +26,7 @@ window.onload = function () {
   const os = getMobileOperatingSystem();
   const androidLink =
     'intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end';
-  const iOSLink = 'vnd.youtube://@meMihai';
+  const iOSLink = 'vnd.youtube://www.youtube.com/@meMihai';
   const fallbackLink = 'https://youtube.com/@meMihai';
 
   switch (os) {
