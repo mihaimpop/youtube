@@ -18,40 +18,36 @@ function getMobileOperatingSystem() {
 
 document.addEventListener('DOMContentLoaded', function () {
   const os = getMobileOperatingSystem();
-  console.log(`Detected OS: ${os}`); // For debugging purposes
+  console.log(`Detected OS: ${os}`);
 
-  const androidLink = 'intent://www.youtube.com/@meMihai#Intent;scheme=https;package=com.google.android.youtube;end';
+  const androidIntentLink =
+    'intent://www.youtube.com/@meMihai#Intent;scheme=https;package=com.google.android.youtube;end';
+  const androidYouTubeSchemeLink = 'youtube://www.youtube.com/@meMihai';
   const iOSLink = 'vnd.youtube://www.youtube.com/@meMihai';
   const fallbackLink = 'https://youtube.com/@meMihai';
 
-  switch (os) {
-    case ANDROID_PHONE: {
-      // Attempt to open YouTube app via Intent URL
-      window.location.href = androidLink;
-      // Fallback to web after 3 seconds if app doesn't open
-      window.setTimeout(function () {
+  if (os === ANDROID_PHONE) {
+    console.log('Attempting to open YouTube app via Intent URL.');
+    window.location.href = androidIntentLink;
+    setTimeout(() => {
+      console.log('Attempting to open YouTube app via YouTube URI scheme.');
+      window.location.href = androidYouTubeSchemeLink;
+      setTimeout(() => {
+        console.log('Falling back to YouTube mobile website.');
         window.location.href = fallbackLink;
       }, 3000);
-      break;
-    }
-    case IOS_PHONE: {
-      // Attempt to open YouTube app via custom scheme
-      window.location.href = iOSLink;
-      // Fallback to web after 3 seconds if app doesn't open
-      window.setTimeout(function () {
-        window.location.href = fallbackLink;
-      }, 3000);
-      break;
-    }
-    case UNKNOWN: {
-      // Directly open the fallback link
+    }, 3000);
+  } else if (os === IOS_PHONE) {
+    console.log('Attempting to open YouTube app via custom scheme.');
+    window.location.href = iOSLink;
+    setTimeout(() => {
+      console.log('Falling back to YouTube mobile website.');
       window.location.href = fallbackLink;
-      break;
-    }
+    }, 3000);
+  } else {
+    console.log(
+      'Operating system unknown. Redirecting to YouTube mobile website.',
+    );
+    window.location.href = fallbackLink;
   }
-
-  function killPopup() {
-    window.removeEventListener('pagehide', killPopup);
-  }
-  window.addEventListener('pagehide', killPopup);
 });
