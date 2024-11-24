@@ -18,29 +18,34 @@ function getMobileOperatingSystem() {
 
 document.addEventListener('DOMContentLoaded', function () {
   const os = getMobileOperatingSystem();
-  const redirectTimeout = 2000;
-  const androidLink =
-    'intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end';
+  console.log(`Detected OS: ${os}`); // For debugging purposes
+
+  const androidLink = 'intent://www.youtube.com/@meMihai#Intent;scheme=https;package=com.google.android.youtube;end';
   const iOSLink = 'vnd.youtube://www.youtube.com/@meMihai';
   const fallbackLink = 'https://youtube.com/@meMihai';
 
   switch (os) {
     case ANDROID_PHONE: {
-      window.location = androidLink;
+      // Attempt to open YouTube app via Intent URL
+      window.location.href = androidLink;
+      // Fallback to web after 3 seconds if app doesn't open
       window.setTimeout(function () {
-        window.location = fallbackLink;
-      }, redirectTimeout);
+        window.location.href = fallbackLink;
+      }, 3000);
       break;
     }
     case IOS_PHONE: {
-      window.location = iOSLink;
+      // Attempt to open YouTube app via custom scheme
+      window.location.href = iOSLink;
+      // Fallback to web after 3 seconds if app doesn't open
       window.setTimeout(function () {
-        window.location = fallbackLink;
-      }, redirectTimeout);
+        window.location.href = fallbackLink;
+      }, 3000);
       break;
     }
     case UNKNOWN: {
-      window.location = fallbackLink;
+      // Directly open the fallback link
+      window.location.href = fallbackLink;
       break;
     }
   }
