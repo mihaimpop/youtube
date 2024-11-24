@@ -1,15 +1,9 @@
-const WINDOWS_PHONE = 'Windows Phone';
 const ANDROID_PHONE = 'Android';
 const IOS_PHONE = 'iOS';
 const UNKNOWN = 'unknown';
 
 function getMobileOperatingSystem() {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-  // Windows Phone must come first because its UA also contains "Android"
-  if (/windows phone/i.test(userAgent)) {
-    return WINDOWS_PHONE;
-  }
 
   if (/android/i.test(userAgent)) {
     return ANDROID_PHONE;
@@ -22,8 +16,9 @@ function getMobileOperatingSystem() {
   return UNKNOWN;
 }
 
-window.onload = function () {
+document.addEventListener('DOMContentLoaded', function () {
   const os = getMobileOperatingSystem();
+  const redirectTimeout = 2000;
   const androidLink =
     'intent://www.youtube.com/@meMihai#Intent;package=com.google.android.youtube;scheme=https;end';
   const iOSLink = 'vnd.youtube://www.youtube.com/@meMihai';
@@ -34,16 +29,19 @@ window.onload = function () {
       window.location = androidLink;
       window.setTimeout(function () {
         window.location = fallbackLink;
-      }, 25);
+      }, redirectTimeout);
+      break;
     }
     case IOS_PHONE: {
       window.location = iOSLink;
       window.setTimeout(function () {
         window.location = fallbackLink;
-      }, 25);
+      }, redirectTimeout);
+      break;
     }
     case UNKNOWN: {
       window.location = fallbackLink;
+      break;
     }
   }
 
@@ -51,4 +49,4 @@ window.onload = function () {
     window.removeEventListener('pagehide', killPopup);
   }
   window.addEventListener('pagehide', killPopup);
-};
+});
