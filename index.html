@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Redirecting to YouTube</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google Fonts for styling -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    /* Basic Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Body Styling */
     body {
       display: flex;
       justify-content: center;
@@ -24,42 +22,46 @@
       font-family: 'Roboto', sans-serif;
     }
 
-    /* Container for Animation and Message */
     .redirect-container {
       text-align: center;
     }
 
-    /* YouTube Logo Styling */
     .youtube-logo {
-      width: 100px;
-      height: 100px;
+      width: 200px;
+      height: 80px;
       margin: 0 auto 20px;
-      background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg');
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/20/YouTube_2024.svg');
       background-size: contain;
       background-repeat: no-repeat;
       animation: bounce 2s infinite;
     }
 
-    /* Bouncing Animation */
     @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
         transform: translateY(0);
       }
+
       40% {
         transform: translateY(-20px);
       }
+
       60% {
         transform: translateY(-10px);
       }
     }
 
-    /* Redirecting Message Styling */
     .redirect-message {
       font-size: 1.2em;
       color: #333;
     }
   </style>
 </head>
+
 <body>
   <div class="redirect-container">
     <div class="youtube-logo"></div>
@@ -67,12 +69,10 @@
   </div>
 
   <script>
-    // Operating System Constants
     const ANDROID_PHONE = 'Android';
     const IOS_PHONE = 'iOS';
     const UNKNOWN = 'unknown';
 
-    // Function to Detect Mobile Operating System
     function getMobileOperatingSystem() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -87,10 +87,8 @@
       return UNKNOWN;
     }
 
-    // Redirection Logic
     document.addEventListener('DOMContentLoaded', function () {
       const os = getMobileOperatingSystem();
-      console.log(`Detected OS: ${os}`); // For debugging purposes
 
       const androidIntentLink = 'intent://www.youtube.com/@meMihai#Intent;scheme=https;package=com.google.android.youtube;end';
       const androidYouTubeSchemeLink = 'youtube://www.youtube.com/@meMihai';
@@ -101,26 +99,23 @@
         case ANDROID_PHONE: {
           console.log('Attempting to open YouTube app via Intent URL.');
           window.location.href = androidIntentLink;
-          // Fallback to YouTube mobile website after 3 seconds
           setTimeout(function () {
             console.log('Attempting to open YouTube app via YouTube URI scheme.');
             window.location.href = androidYouTubeSchemeLink;
-            // Final fallback after another 3 seconds
             setTimeout(function () {
               console.log('Falling back to YouTube mobile website.');
               window.location.href = fallbackLink;
-            }, 3000);
-          }, 3000);
+            }, 2000);
+          }, 2000);
           break;
         }
         case IOS_PHONE: {
           console.log('Attempting to open YouTube app via custom scheme.');
           window.location.href = iOSLink;
-          // Fallback to YouTube mobile website after 3 seconds
           setTimeout(function () {
             console.log('Falling back to YouTube mobile website.');
             window.location.href = fallbackLink;
-          }, 3000);
+          }, 2000);
           break;
         }
         case UNKNOWN: {
@@ -130,7 +125,6 @@
         }
       }
 
-      // Optional: Handle Page Hide Event
       function killPopup() {
         window.removeEventListener('pagehide', killPopup);
       }
@@ -138,4 +132,5 @@
     });
   </script>
 </body>
+
 </html>
