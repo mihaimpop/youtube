@@ -93,33 +93,34 @@
       const androidIntentLink = 'intent://www.youtube.com/@meMihai#Intent;scheme=https;package=com.google.android.youtube;end';
       const androidYouTubeSchemeLink = 'youtube://www.youtube.com/@meMihai';
       const iOSLink = 'vnd.youtube://www.youtube.com/@meMihai';
-      const fallbackLink = 'https://youtube.com/@meMihai';
+      const fallbackLink = 'https://youtube.com/@meMihai'
+      const timeout = 3000;
 
       switch (os) {
         case ANDROID_PHONE: {
-          console.log('Attempting to open YouTube app via Intent URL.');
+          // console.log('Attempting to open YouTube app via Intent URL.');
           window.location.href = androidIntentLink;
           setTimeout(function () {
-            console.log('Attempting to open YouTube app via YouTube URI scheme.');
+            // console.log('Attempting to open YouTube app via YouTube URI scheme.');
             window.location.href = androidYouTubeSchemeLink;
             setTimeout(function () {
-              console.log('Falling back to YouTube mobile website.');
+              // console.log('Falling back to YouTube mobile website.');
               window.location.href = fallbackLink;
-            }, 2000);
-          }, 2000);
+            }, timeout);
+          }, timeout);
           break;
         }
         case IOS_PHONE: {
-          console.log('Attempting to open YouTube app via custom scheme.');
+          // console.log('Attempting to open YouTube app via custom scheme.');
           window.location.href = iOSLink;
           setTimeout(function () {
-            console.log('Falling back to YouTube mobile website.');
+            // console.log('Falling back to YouTube mobile website.');
             window.location.href = fallbackLink;
-          }, 2000);
+          }, timeout);
           break;
         }
         case UNKNOWN: {
-          console.log('Operating system unknown. Redirecting to YouTube mobile website.');
+          // console.log('Operating system unknown. Redirecting to YouTube mobile website.');
           window.location.href = fallbackLink;
           break;
         }
